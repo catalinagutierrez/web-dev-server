@@ -1,0 +1,191 @@
+> db.tuits.insert({tuit: "Alice's 1st tuit", likes: 123, postedBy: {username: "alice"}})
+WriteResult({ "nInserted" : 1 })
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+webdev  0.000GB
+> db.tuits.insert({tuit: "Bob's 1st tuit", likes: 234, postedBy: {username: "bob"}})
+WriteResult({ "nInserted" : 1 })
+> db.tuits.insert({tuit: "Charlie's 1st tuit", likes: 345, postedBy: {username: "charlie"}})
+WriteResult({ "nInserted" : 1 })
+> db.tuits.insert({tuit: "Dan's 1st tuit", likes: 456, postedBy: {username: "dan"}})
+WriteResult({ "nInserted" : 1 })
+> db.tuits.find()
+{ "_id" : ObjectId("624c4c41b558522cacf8030b"), "tuit" : "Alice's 1st tuit", "likes" : 123, "postedBy" : { "username" : "alice" } }
+{ "_id" : ObjectId("624c4c68b558522cacf8030c"), "tuit" : "Bob's 1st tuit", "likes" : 234, "postedBy" : { "username" : "bob" } }
+{ "_id" : ObjectId("624c4c73b558522cacf8030d"), "tuit" : "Charlie's 1st tuit", "likes" : 345, "postedBy" : { "username" : "charlie" } }
+{ "_id" : ObjectId("624c4c7cb558522cacf8030e"), "tuit" : "Dan's 1st tuit", "likes" : 456, "postedBy" : { "username" : "dan" } }
+> db.tuits.find({"_id":ObjectId("624c4c41b558522cacf8030b")})
+{ "_id" : ObjectId("624c4c41b558522cacf8030b"), "tuit" : "Alice's 1st tuit", "likes" : 123, "postedBy" : { "username" : "alice" } }
+> db.tuits.find({"likes" : 234})
+{ "_id" : ObjectId("624c4c68b558522cacf8030c"), "tuit" : "Bob's 1st tuit", "likes" : 234, "postedBy" : { "username" : "bob" } }
+> db.tuits.find({"postedBy" : { "username" : "dan" }})
+{ "_id" : ObjectId("624c4c7cb558522cacf8030e"), "tuit" : "Dan's 1st tuit", "likes" : 456, "postedBy" : { "username" : "dan" } }
+> 
+> db.tuits.find().pretty()
+{
+	"_id" : ObjectId("624c4c41b558522cacf8030b"),
+	"tuit" : "Alice's 1st tuit",
+	"likes" : 123,
+	"postedBy" : {
+		"username" : "alice"
+	}
+}
+{
+	"_id" : ObjectId("624c4c68b558522cacf8030c"),
+	"tuit" : "Bob's 1st tuit",
+	"likes" : 234,
+	"postedBy" : {
+		"username" : "bob"
+	}
+}
+{
+	"_id" : ObjectId("624c4c73b558522cacf8030d"),
+	"tuit" : "Charlie's 1st tuit",
+	"likes" : 345,
+	"postedBy" : {
+		"username" : "charlie"
+	}
+}
+{
+	"_id" : ObjectId("624c4c7cb558522cacf8030e"),
+	"tuit" : "Dan's 1st tuit",
+	"likes" : 456,
+	"postedBy" : {
+		"username" : "dan"
+	}
+}
+> db.tuits.updateOne({"likes" : 345}, {$set: {"likes" : 346}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.tuits.updateOne({"_id" : ObjectId("624c4c68b558522cacf8030c")}, {$set: {"likes" : 124}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.tuits.deleteOne({_id: ObjectId("624c4c7cb558522cacf8030e")})
+{ "acknowledged" : true, "deletedCount" : 1 }
+> db.tuits.find()
+{ "_id" : ObjectId("624c4c41b558522cacf8030b"), "tuit" : "Alice's 1st tuit", "likes" : 123, "postedBy" : { "username" : "alice" } }
+{ "_id" : ObjectId("624c4c68b558522cacf8030c"), "tuit" : "Bob's 1st tuit", "likes" : 124, "postedBy" : { "username" : "bob" } }
+{ "_id" : ObjectId("624c4c73b558522cacf8030d"), "tuit" : "Charlie's 1st tuit", "likes" : 346, "postedBy" : { "username" : "charlie" } }
+> db.tuits.insert({
+...     "topic": "Web Development",
+...     "postedBy": {
+...       "username": "ReactJS",
+...     },
+...     "liked": true,
+...     "disliked": false,
+...     "verified": false,
+...     "handle": "ReactJS",
+...     "time": "2h",
+...     "title":
+...       "React.js is a component based front end library that makes it very easy to build Single Page Applications or SPAs",
+...     "tuit": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+...     "attachments": {
+...       "video": "unKvMC3Y1kI",
+...     },
+...     "logo-image": "react-blue.png",
+...     "avatar-image": "react-blue.png",
+...     "stats": {
+...       "comments": 123,
+...       "retuits": 234,
+...       "likes": 345,
+...       "dislikes": 42,
+...     }
+...   })
+WriteResult({ "nInserted" : 1 })
+> db.tuits.insert({
+...     "topic": "Space",
+...     "postedBy": {
+...       "username": "SpaceX",
+...     },
+...     "liked": false,
+...     "disliked": false,
+...     "verified": false,
+...     "handle": "spacex",
+...     "title": "",
+...     "tuit": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+...     "attachments": {
+...       "image": "starship.jpg",
+...     },
+...     "time": "last month",
+...     "logo-image": "node.png",
+...     "avatar-image": "node.png",
+...     "tuits": "120K",
+...     "stats": {
+...       "comments": 123,
+...       "retuits": 234,
+...       "likes": 345,
+...       "dislikes": 93,
+...     }
+...   })
+WriteResult({ "nInserted" : 1 })
+> db.tuits.insert({
+...     "topic": "Space",
+...     "postedBy": {
+...       "username": "Scott Manley",
+...     },
+...     "liked": true,
+...     "disliked": true,
+...     "verified": true,
+...     "handle": "DJSnM",
+...     "postedOn": "2020-12-10",
+...     "time": "1 day",
+...     "title":
+...       "JavaScript is programming language that can run on browsers as well as desktops",
+...     "tuit": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+...     "logo-image": "js.png",
+...     "avatar-image": "js.png",
+...     "tuits": "123K",
+...     "stats": {
+...       "comments": 123,
+...       "retuits": 234,
+...       "likes": 345,
+...       "dislikes": 107,
+...     }
+...   })
+WriteResult({ "nInserted" : 1 })
+> db.tuits.insert({
+...     "topic": "Web Development",
+...     "postedBy": {
+...       "username": "jQuery",
+...     },
+...     "liked": false,
+...     "disliked": false,
+...     "verified": false,
+...     "handle": "jQuery",
+...     "title": "jQuery",
+...     "tuit": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+...     "time": "last week",
+...     "logo-image": "jquery.png",
+...     "avatar-image": "jquery.png",
+...     "tuits": "122K",
+...     "stats": {
+...       "comments": 123,
+...       "retuits": 234,
+...       "likes": 345,
+...       "dislikes": 56,
+...     },
+...   })
+WriteResult({ "nInserted" : 1 })
+> db.tuits.insert({
+...     "topic": "Web Development",
+...     "postedBy": {
+...       "username": "NodeJS",
+...     },
+...     "liked": true,
+...     "disliked": false,
+...     "verified": true,
+...     "handle": "NodeJS",
+...     "title": "",
+...     "tuit": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+...     "time": "last month",
+...     "logo-image": "node.png",
+...     "avatar-image": "node.png",
+...     "tuits": "120K",
+...     "stats": {
+...       "comments": 123,
+...       "retuits": 234,
+...       "likes": 345,
+...       "dislikes": 43,
+...     }
+...   })
+WriteResult({ "nInserted" : 1 })
