@@ -11,7 +11,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect("mongodb://localhost:27017/webdev");
+// mongoose.connect("mongodb://localhost:27017/webdev");
+mongoose.connect(
+  "mongodb+srv://admin:admin1234567@cluster0.pme25.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+);
 
 helloController(app);
 userController(app);
